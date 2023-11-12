@@ -1,0 +1,3 @@
+[submodule "TypeScript-DOM-lib-generator"]
+	path = TypeScript-DOM-lib-generator
+	url = https://github.com/microsoft/TypeScript-DOM-lib-generator.git
