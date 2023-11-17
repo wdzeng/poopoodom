@@ -1,76 +1,80 @@
-# TypeScript Template
+# PooPooDom
 
-My typescript project template. Integrates with:
+Type declarations of dom lib.
 
-- Node.js v20
-- Pnpm
-- ECMAScript 2022
-- ESM modules
-- TypeScript v5
-- ESLint/Prettier
+## Why and When
 
-## Node and TypeScript Configurations
+You are developing in a non-browser environment, but you need typings of DOM. Perhaps you are using
+[puppeteer](https://github.com/puppeteer/puppeteer).
 
-### ES2022
+You may consider to use `dom` lib. However, it inserts lots of globals. So dirty!
 
-This template integrates with ECMAScript 2022, so `target` and `module` fields in tsconfig are set
-to `es2022`.
-
-### ES Module
-
-This template is using ES module (ESM), so `type` is set to `module` in package.json and
-`moduleResolution` set to `bundler` in tsconfig.
-
-Replace `require` with `import`; do not use `exports` or `modules.export`.
-
-```js
-❌ const fs = require('fs')
-✅ import fs from 'node:fs'
-```
-
-Prevent CJS-only syntax. See [Differences between ES modules and CommonJS](https://nodejs.org/api/esm.html#differences-between-es-modules-and-commonjs).
-
-```js
-❌ const currentDir = __dirname
-✅ const currentDir = path.dirname(url.fileURLToPath(import.meta.url))
-```
-
-### Path Alias
-
-The template is using path alias `@` which is set to `src`.
+## Usage
 
 ```ts
-import helloworld from '@/helloworld.js'
+import type { Document, HTMLElement } from 'poopoodom'  // ✓ good
+// import { Document, HTMLElement } from 'poopoodom'    // ✗ bad
+
+function getElementByIdAndCheck<Element extends HTMLElement>(
+    document: Document,
+    id: string
+): Element {
+    const element = document.getElementById(id)
+    if (element === null) {
+        throw new Error(`Element not found: ${id}`)
+    }
+    return element as Element
+}
 ```
 
-Please update `paths` field in tsconfig to change path aliases.
+**Always import types only:** This package assumes everything is available at runtime and does not
+provide any implementation.
 
-## Development
+Modern browsers now provide `dom.iterable` API. To use it, import whatever you need from
+`poopoodom/iterable`. Note that types from `poopoodom` and `poopoodom/iterable` are irrelevant.
 
-This template is using [`tsx`](https://github.com/esbuild-kit/tsx) for development.
+```ts
+import type { Document as OldDocument, HTMLElement as OldHTMLElement } from 'poopoodom'
+import type { Document, HTMLElement } from 'poopoodom/iterable'
 
-```shell
-pnpm dev
+function getWideElementByClassNameInOldBrowser(d: OldDocument, className: string): OldHTMLElement[] {
+  const elements = d.querySelectorAll<OldHTMLElement>(`.${className}`)
+  const ret: OldHTMLElement[] = []
+  for (const element of Array.from(elements)) {
+    if (element.offsetWidth > 1000) {
+      ret.push(element)
+    }
+  }
+  return ret
+}
+
+function getWideElementsByClassNameInModernBrowser(d: Document, className: string): HTMLElement[] {
+  const elements = d.querySelectorAll<HTMLElement>(`.${className}`)
+  const ret: HTMLElement[] = []
+  for (const element of elements) {
+    if (element.offsetWidth > 1000) {
+      ret.push(element)
+    }
+  }
+  return ret
+}
 ```
 
-## Linting
+## Working with ESLint
 
-This template leverages ESLint and Prettier, using my custom eslint configurations at
-[`wdzeng/eslint-config`](https://github.com/wdzeng/eslint-config).
+Add a [typescript-eslint](https://typescript-eslint.io/) rule to prevent accidentally importing
+non-type elements.
 
-Please use ESLint as default formatter if you are developing with VSCode, or use `pnpm lint` command
-to lint codes under src directory.
-
-```shell
-pnpm lint
-```
-
-## Build Project
-
-This template is using [`esbuild`](https://github.com/evanw/esbuild) to transpile all TypeScript
-files into a single JavaScript file.
-
-```shell
-pnpm build
-node dist/index.cjs
+```js
+// .eslintrc.cjs
+module.exports = {
+  rules: {
+    '@typescript-eslint/no-restricted-imports': ['error', {
+      paths: [{
+        name: 'poopoodom',
+        allowTypeImports: true
+      }]
+    }]
+  }
+}
 ```
