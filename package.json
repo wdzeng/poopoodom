@@ -51,17 +51,15 @@
     "clean": "rm -rf dist",
     "lint": "eslint src/ --ext .js --fix --ignore-path .gitignore"
   },
-  "dependencies": {
-    "json5": "^2.2.3",
-    "tempy": "^3.1.0",
-    "ts-morph": "^20.0.0"
-  },
   "peerDependencies": {
     "typescript": ">=4.7"
   },
   "devDependencies": {
     "eslint": "^8.54.0",
     "eslint-config-wdzeng": "github:wdzeng/eslint-config#semver:^0.6.0",
-    "prettier": "^3.1.0"
+    "json5": "^2.2.3",
+    "prettier": "^3.1.0",
+    "tempy": "^3.1.0",
+    "ts-morph": "^20.0.0"
   }
 }
