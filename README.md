@@ -37,19 +37,19 @@ Modern browsers now provide `dom.iterable` API. To use it, import whatever you n
 import type { Document as OldDocument, HTMLElement as OldHTMLElement } from 'poopoodom'
 import type { Document, HTMLElement } from 'poopoodom/iterable'
 
-function getWideElementByClassNameInOldBrowser(d: OldDocument, className: string): OldHTMLElement[] {
-  const elements = d.querySelectorAll<OldHTMLElement>(`.${className}`)
+function getWideElementsInOldBrowser(document: OldDocument): OldHTMLElement[] {
+  const elements = document.body.querySelectorAll<OldHTMLElement>('*')
   const ret: OldHTMLElement[] = []
-  for (const element of Array.from(elements)) {
-    if (element.offsetWidth > 1000) {
-      ret.push(element)
+  for (let i = 0; i < elements.length; i++) {
+    if (elements[i].offsetWidth > 1000) {
+      ret.push(elements[i])
     }
   }
   return ret
 }
 
-function getWideElementsByClassNameInModernBrowser(d: Document, className: string): HTMLElement[] {
-  const elements = d.querySelectorAll<HTMLElement>(`.${className}`)
+function getWideElementsInModernBrowser(document: Document): HTMLElement[] {
+  const elements = document.body.querySelectorAll<HTMLElement>('*')
   const ret: HTMLElement[] = []
   for (const element of elements) {
     if (element.offsetWidth > 1000) {
