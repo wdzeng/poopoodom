@@ -1,4 +1,8 @@
 {
+  "5.3": {
+    "dom": "https://raw.githubusercontent.com/microsoft/TypeScript/v5.3-beta/src/lib/dom.generated.d.ts",
+    "dom.iterable": "https://raw.githubusercontent.com/microsoft/TypeScript/v5.3-beta/src/lib/dom.iterable.generated.d.ts"
+  },
   "5.2": {
     "dom": "https://raw.githubusercontent.com/microsoft/TypeScript/v5.2-beta/src/lib/dom.generated.d.ts",
     "dom.iterable": "https://raw.githubusercontent.com/microsoft/TypeScript/v5.2-beta/src/lib/dom.iterable.generated.d.ts"
