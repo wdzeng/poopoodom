@@ -19,11 +19,6 @@
     "dom": "https://raw.githubusercontent.com/microsoft/TypeScript/v4.9-rc/src/lib/dom.generated.d.ts",
     "dom.iterable": "https://raw.githubusercontent.com/microsoft/TypeScript/v4.9-rc/src/lib/dom.iterable.generated.d.ts"
   },
-  // >= 4.9-beta but don't support pre-releases
-  // "4.9-beta": {
-  //   "dom": "https://raw.githubusercontent.com/microsoft/TypeScript/v4.9-beta/src/lib/dom.generated.d.ts",
-  //   "dom.iterable": "https://raw.githubusercontent.com/microsoft/TypeScript/v4.9-beta/src/lib/dom.iterable.generated.d.ts"
-  // },
   "4.8": {
     "dom": "https://raw.githubusercontent.com/microsoft/TypeScript/v4.8-beta/src/lib/dom.generated.d.ts",
     "dom.iterable": "https://raw.githubusercontent.com/microsoft/TypeScript/v4.8-beta/src/lib/dom.iterable.generated.d.ts"
