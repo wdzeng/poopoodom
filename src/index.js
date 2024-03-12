@@ -3,10 +3,10 @@ import fs from 'node:fs/promises'
 import https from 'node:https'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { Worker } from 'node:worker_threads'
 
 import json5 from 'json5'
 import { temporaryFile } from 'tempy'
+import workerPool from 'workerpool'
 
 async function mkdirp(p) {
   try {
@@ -19,23 +19,10 @@ async function mkdirp(p) {
   }
 }
 
-function parseDtsInAnotherThread(src, dst) {
-  return new Promise((resolve, reject) => {
-    const worker = new Worker(
-      path.join(path.dirname(fileURLToPath(import.meta.url)), 'worker.js'),
-      {
-        workerData: { src, dst }
-      }
-    )
-    worker.on('error', reject)
-    worker.on('exit', code => {
-      if (code === 0) {
-        resolve()
-      } else {
-        reject(new Error(`Worker stopped with exit code ${code}`))
-      }
-    })
-  })
+const pool = workerPool.pool(path.join(path.dirname(fileURLToPath(import.meta.url)), 'worker.js'))
+
+async function parseDtsInAnotherThread(src, dst) {
+  await pool.exec('generate', [src, dst])
 }
 
 async function parseDomAndIterable(srcDom, srcDomIter, dstDir) {

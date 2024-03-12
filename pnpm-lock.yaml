@@ -28,6 +28,9 @@ devDependencies:
   ts-morph:
     specifier: ^22.0.0
     version: 22.0.0
+  workerpool:
+    specifier: ^9.1.0
+    version: 9.1.0
 
 packages:
 
@@ -2242,6 +2245,10 @@ packages:
     hasBin: true
     dependencies:
       isexe: 2.0.0
+    dev: true
+
+  /workerpool@9.1.0:
+    resolution: {integrity: sha512-+wRWfm9yyJghvXLSHMQj3WXDxHbibHAQmRrWbqKBfy0RjftZNeQaW+Std5bSYc83ydkrxoPTPOWVlXUR9RWJdQ==}
     dev: true
 
   /wrappy@1.0.2:
