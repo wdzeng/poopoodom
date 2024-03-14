@@ -82,6 +82,7 @@ const versions = json5.parse(
   true
 )
 
+const tasks = []
 const distDir =
   process.argv[2] ?? path.join(path.dirname(fileURLToPath(import.meta.url)), '../dist')
 for (const [k, v] of Object.entries(versions)) {
@@ -90,9 +91,11 @@ for (const [k, v] of Object.entries(versions)) {
   const urlDomIter = v['dom.iterable']
   // TODO: consider using worker pool
   // eslint-disable-next-line unicorn/prefer-top-level-await
-  processVersion(urlDom, urlDomIter, path.join(distDir, 'types', `v${version}`))
+  tasks.push(processVersion(urlDom, urlDomIter, path.join(distDir, 'types', `v${version}`)))
 }
 
+// eslint-disable-next-line unicorn/prefer-top-level-await
+Promise.all(tasks).then(() => pool.terminate())
 const jsContent = 'throw new Error("you cannot import poopoodom");'
 await mkdirp(distDir)
 fs.writeFile(path.join(distDir, 'dom.js'), jsContent, 'utf8')
