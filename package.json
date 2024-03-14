@@ -1,6 +1,6 @@
 {
   "name": "poopoodom",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A type-only dom library for TypeScript",
   "author": {
     "name": "hyperbola",
