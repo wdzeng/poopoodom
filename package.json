@@ -28,6 +28,7 @@
     ".": {
       "default": "./dist/index.js",
       "types@^5.4": "./dist/types/v5.4/dom.d.ts",
+      "types@^5.3": "./dist/types/v5.3/dom.d.ts",
       "types@^5.2": "./dist/types/v5.2/dom.d.ts",
       "types@^5.1": "./dist/types/v5.1/dom.d.ts",
       "types@^5.0": "./dist/types/v5.0/dom.d.ts",
