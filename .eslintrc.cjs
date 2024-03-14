@@ -13,6 +13,7 @@ module.exports = {
   },
   rules: {
     // Your custom rules go here ...
+    'n/no-extraneous-import': 'off',
     'prettier/prettier': 'warn'
   },
 }
